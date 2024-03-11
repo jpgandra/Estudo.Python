@@ -1,0 +1,79 @@
+def ESCOLHA():
+    i=input(print("Deseja continuar <S/N>:"))
+    i=i.upper()
+    if(i!='N' and i!='S'):
+        ESCOLHA()
+    return i
+
+def SOMAR(x):
+    y=int(input(print("Digite o Número que irá somar: ")))
+    x+=y
+    i=ESCOLHA()
+    if(i=='S'):
+        x=SOMAR(x)
+    return x
+
+def  SUBTRAIR(x):
+    y=int(input(print("\nDigite o Número que irá subtrair: ")))
+    x-=y
+    i=ESCOLHA()
+    if(i=='S'):
+        x=SUBTRAIR(x)
+    return x
+
+def MULTIPLICAR(x):
+    y=int(input(print("\nDigite o Número que irá multiplicar: ")))
+    x*=y
+    i=ESCOLHA()
+    if(i=='S'):
+        x=MULTIPLICAR(x)
+    return x
+
+def DIVIDIR(x):
+    y=float(input(print("\nDigite o Número que irá dividir: ")))
+    x=float(x/y)
+    i=ESCOLHA()
+    if(i=='S'):
+        x=DIVIDIR(x)
+    return x
+
+def EXPONENCIAÇÃO(x):
+    e=0
+    y=int(input(print("\nDigite o Número que irá ser o expoente: ")))
+    f=x
+    for e in range(y-1):
+        x*=f
+    i=ESCOLHA()
+    if(i=='S'):
+        x=EXPONENCIAÇÃO(x)
+    return x
+
+def main(r=0, l=0, z=0, Resultados=[]):
+    if(l==0):
+        r=int(input(print("\n\n\nDigite um Número: ")))
+    z = int(input(print("|1|SOMA|\n|2|SUBTRAÇÃO|\n|3|MULTIPLICAÇÃO|\n|4|DIVISÃO|\n|5|EXPONENCIAÇÃO|\n|6|LIMPAR|\n|7|MOSTRAR RESULTADOS|\n|8|SAIR|")))
+    if(z<6):
+        if(z==1):
+            r=SOMAR(r)
+        if(z==2):
+            r=SUBTRAIR(r)
+        if(z==3):
+            r=MULTIPLICAR(r)
+        if(z==4):
+            r=DIVIDIR(r)
+        if(z==5):
+            r=EXPONENCIAÇÃO(r)
+        l+=1
+        print("\n\n|Resultado: ", r,'|\n\n')
+        main(r,l)
+    elif(z<8):
+        Resultados.append(str(r))
+        if(z==7):
+            q=0
+            for q in range(len(Resultados)):
+                print("\n|",q+1,"° Resultado: ",Resultados[q],"|")
+        main(None,0,None,Resultados)
+    else:
+        print("\n\n|-----FINALIZAÇÃO DE PROGRAMA-----|\n\n")
+
+main()
