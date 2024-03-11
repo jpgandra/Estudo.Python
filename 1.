@@ -48,11 +48,17 @@ def EXPONENCIAÇÃO(x):
         x=EXPONENCIAÇÃO(x)
     return x
 
+def FATORAÇÃO(x):
+    if(x==1):
+        return 1
+    x*=FATORAÇÃO(x-1)
+    return x
+
 def main(r=0, l=0, z=0, Resultados=[]):
     if(l==0):
         r=int(input(print("\n\n\nDigite um Número: ")))
-    z = int(input(print("|1|SOMA|\n|2|SUBTRAÇÃO|\n|3|MULTIPLICAÇÃO|\n|4|DIVISÃO|\n|5|EXPONENCIAÇÃO|\n|6|LIMPAR|\n|7|MOSTRAR RESULTADOS|\n|8|SAIR|")))
-    if(z<6):
+    z = int(input(print("|1|SOMA|\n|2|SUBTRAÇÃO|\n|3|MULTIPLICAÇÃO|\n|4|DIVISÃO|\n|5|EXPONENCIAÇÃO|\n|6|FATORAÇÃO|\n|7|LIMPAR|\n|8|MOSTRAR RESULTADOS|\n|9|SAIR|")))
+    if(z<7):
         if(z==1):
             r=SOMAR(r)
         if(z==2):
@@ -63,10 +69,12 @@ def main(r=0, l=0, z=0, Resultados=[]):
             r=DIVIDIR(r)
         if(z==5):
             r=EXPONENCIAÇÃO(r)
+        if(z==6):
+            r=FATORAÇÃO(r)
         l+=1
         print("\n\n|Resultado: ", r,'|\n\n')
         main(r,l)
-    elif(z<8):
+    elif(z<9):
         Resultados.append(str(r))
         if(z==7):
             q=0
