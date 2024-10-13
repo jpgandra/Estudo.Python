@@ -1,0 +1,76 @@
+
+class Node:
+    def __init__(self, valor):
+        self.valor = valor
+        self.esquerda = None
+        self.direita = None
+
+class Arvore:
+    def __init__(self):
+        self.root = None
+
+    def inserir(self, valor, node = None):
+        if self.root is None:
+            self.root = Node(valor)
+        else:
+            if  node is None:
+                node = self.root
+            if(valor<node.valor):
+                if node.esquerda is None:
+                    node.esquerda = Node(valor)
+                else:
+                    self.inserir(valor, node.esquerda)
+            else:
+                if node.direita is None:
+                    node.direita = Node(valor)
+                else:
+                    self.inserir(valor, node.direita)
+
+    def getMin(self, nohAtual = -1):
+        if nohAtual == -1:
+            nohAtual = self.root
+        if nohAtual == None:
+            return None
+        else:
+            print("|")
+            if nohAtual.esquerda == None:
+                return nohAtual.valor
+            else:
+                return self.getMin(nohAtual.esquerda)
+    
+    def getMax(self, nohAtual = -1):
+        if nohAtual == -1:
+            nohAtual = self.root
+        if nohAtual == None:
+            return None
+        else:
+            if nohAtual.direita == None:
+                return nohAtual.valor
+            else:
+                return self.getMax(nohAtual.direita) 
+            
+    def buscar(self, valor, nohAtual = -1):
+        if nohAtual == -1:
+            nohAtual = self.root
+        if nohAtual == None:
+            return False
+        else:
+            if nohAtual.valor == valor:
+                return True
+            if valor<nohAtual.valor:
+                return self.buscar(valor, nohAtual.esquerda)
+            else:
+                return self.buscar(valor, nohAtual.direita)
+
+tree = Arvore()
+
+tree.inserir(10)
+tree.inserir(8)
+tree.inserir(9)
+tree.inserir(12)
+tree.inserir(3)
+x = tree.getMin()
+print(x)
+x = tree.getMax()
+print(x)
+
