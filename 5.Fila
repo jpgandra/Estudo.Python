@@ -1,0 +1,83 @@
+class Node:
+    def __init__(self, valor = None, next = None):
+        self.valor = valor
+        self.next = next
+
+class Fila:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+        self.size = 0
+    
+    def isEmpty(self):
+        if self.front is None:
+            return True
+        else:
+            return False
+    
+    def getsize(self):
+        return self.size
+    
+    def enqueue(self, valor):
+        auxnode = Node(valor)
+        if self.isEmpty():
+            self.front = auxnode
+        else:
+            self.rear.next = auxnode
+        self.rear = auxnode
+        self.size += 1
+    
+    def dequeue(self):
+        if self.isEmpty():
+            print("Erro Underflow!!!")
+            return None
+        valor = self.front.valor
+        auxnode = self.front
+        self.front = self.front.next
+        if self.isEmpty():
+            self.rear = None
+        self.size-=1
+        del auxnode
+        return valor
+    
+    def getfront(self):
+        return self.front.valor
+    
+    def clear(self):
+        while not self.isEmpty():
+            self.dequeue()
+
+
+    def __str__(self):
+        filaaux = Fila()
+        size = self.getsize()
+        strFila = '['
+        for i in range(size):
+            aux = self.dequeue()
+            strFila += ' ' + str(aux)
+            filaaux.enqueue(aux)
+        for i in range(size):
+            aux=filaaux.dequeue()
+            self.enqueue(aux)
+        strFila += ']'
+        return strFila
+
+fila1 = Fila()
+fila1.enqueue(5)
+fila1.enqueue(3)
+fila1.enqueue(6)
+fila1.enqueue(12)
+fila1.enqueue(13)
+fila1.enqueue(0)
+fila1.enqueue(11)
+fila1.enqueue(1)
+fila1.dequeue()
+fila1.dequeue()
+print(fila1)
+print(fila1.size)
+x=fila1.getsize()
+print("Tamanho:",x,"\nPrimeiro: ", fila1.front.valor,"\nUltimo: ", fila1.rear.valor)
+fila1.clear()
+x=fila1.getsize()
+print(fila1)
+print("Tamanho:",x,"\nPrimeiro: ", fila1.front,"\nUltimo: ", fila1.rear)
