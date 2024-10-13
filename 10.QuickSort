@@ -1,0 +1,35 @@
+
+def quick_sort(vec, initvec=None, fimvec=None):
+    
+    if initvec == None:
+        vec = vec.copy()
+        initvec = 0
+        fimvec = len(vec)-1
+
+    pivo = vec[initvec]
+    left = initvec +1
+    right = fimvec
+    while (left<=right):
+        if vec[left]<pivo:
+            left=left+1
+        elif vec[right]>pivo:
+            right = right-1
+        else:
+            aux = vec[left]
+            vec[left] = vec[right]
+            vec[right] = aux
+            left = left+1
+            right = right-1
+    vec[initvec] = vec[right]
+    vec[right] = pivo
+    if right > initvec:
+        quick_sort(vec, initvec, right)
+    if left < fimvec:
+        quick_sort(vec, left, fimvec)
+    return vec
+
+lista = [6,4,5,1,7,8,9,11,12,14,3,15,17,0,2,10,13,16]
+lista2 = quick_sort(lista)
+
+print('1', lista)
+print('2', lista2)
