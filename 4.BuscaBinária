@@ -1,0 +1,24 @@
+
+def BUSCA(lista=[], buscado=0, i=0, inicio=0, fim=None, Meio=None, x=None):
+    if(i==0):
+        fim=len(lista)
+        Meio=int((fim-inicio+1)/2)
+    if(buscado!=lista[Meio]):
+        if(inicio==fim):
+            x="NÃ£o Encontrado"
+        else:
+            if(buscado>lista[Meio]):
+                inicio=Meio+1
+                Meio=int(((fim-inicio+1)/2)+Meio)
+            else:
+                fim=Meio-1
+                Meio=int((fim-inicio+1)/2)
+            x=BUSCA(lista,buscado,1,inicio,fim,Meio)
+        return x
+    x='Encontrado'
+    return x
+
+lista=[1, 3, 5, 7, 9, 11, 13, 15, 19]
+r=int(input('Escolha um nÃºmero a ser procurado: '))
+x=BUSCA(lista, r)
+print(x)
