@@ -1,0 +1,24 @@
+def Bubble_sort( lista ):
+    vet=lista.copy()
+    for i in range(len(vet)-1, 0, -1):
+        prim_troca=0
+        l=False
+        for j in range(prim_troca, i, 1):
+            if vet[j]>vet[j+1]:
+                aux=vet[j]
+                vet[j]=vet[j+1]
+                vet[j+1]=aux
+                if l is False and j==0:
+                    prim_troca = j-1
+                l=True
+        print(vet)
+        if l is False:
+            return vet
+    return vet
+lista=[6,4,5,1,7,8,9,11,12,14,13,15,17,10,16,0,3,2]
+lista2=Bubble_sort(lista)
+for i in range(len(lista)):
+    print(lista[i], "\n")
+print("--------------------------------------------------------")
+for i in range(len(lista2)):
+    print(lista2[i], "\n")
