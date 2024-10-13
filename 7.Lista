@@ -1,0 +1,138 @@
+
+class Node:
+    def __init__(self, valor = None, next = None, prev=None):
+        self.valor = valor
+        self.next = next
+        self.prev = prev
+
+class Lista:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+    def getSize(self):
+        return self.size
+
+    def isEmpty(self):
+        return self.size == 0
+
+    def insertHead(self, num):
+        novonoh = Node(num)
+        if self.isEmpty():
+            self.head = novonoh
+            self.tail = novonoh
+        else:
+            self.head.prev = novonoh
+            novonoh.next = self.head
+            self.head = novonoh
+        self.size += 1
+
+    def insertTail(self,num):
+        novonoh = Node(num)
+
+        if self.isEmpty():
+            self.head = novonoh
+            self.tail = novonoh
+        else:
+            self.tail.next = novonoh
+            novonoh.prev = self.tail
+            self.tail = novonoh
+        self.size += 1
+
+    def insert(self, num, pos):
+        if pos > self.getSize() or pos < 0:
+            print("PosiÃ§Ã£o Invalida!!!")
+            return
+        elif pos == 0:
+            self.insertHead(num)
+        elif pos == self.getSize():
+            self.insertTail(num)
+        else:
+            novonoh = Node(num)
+            nohAtual=self.head
+            i = 0
+            while i != pos:
+                nohAtual = nohAtual.next
+                i+=1
+            novonoh.next = nohAtual
+            novonoh.prev = nohAtual.prev
+            nohAtual.prev.next = novonoh
+            nohAtual.prev = novonoh
+            self.size += 1
+
+    def removerHead(self):
+
+        if self.isEmpty():
+            print("Lista vazia!!!")
+            return
+        nohRemover = self.head
+        if self.size == 1:
+            self.next = None
+            self.tail = None
+        else:
+            novoHead = self.head.next
+            novoHead.prev = None
+            self.head = novoHead
+        del nohRemover
+        self.size -= 1
+            
+    def removerTail(self):
+
+        if self.isEmpty():
+            print("Lista vazia!!!")
+            return
+        nohRemover = self.tail
+        if self.size == 1:
+            self.next = None
+            self.tail = None
+        else:
+            novoTail = self.tail.prev
+            novoTail.next = None
+            self.tail = novoTail
+        del nohRemover
+        self.size -=1
+
+    def remover(self, pos):
+        if pos>=self.size or pos<0:
+            print("PosiÃ§Ã£o InvÃ¡lida!!!")
+            return
+        if self.isEmpty():
+            print("Lista vazia!!!")
+            return
+        if pos==self.size-1:
+            self.removerTail()
+        elif pos == 0:
+            self.removerHead()
+        else:
+            i = 0
+            nohRemover = self.head
+            while i != pos:
+                nohRemover = nohRemover.next
+                i += 1
+            novoTail = nohRemover.next
+            novoNext = nohRemover.prev
+            novoTail.prev = novoNext
+            novoNext.next = novoTail
+            del nohRemover
+            self.size -=1
+    
+    def __str__(self):
+
+        strLista = ""
+        if self.isEmpty():
+            return strLista + "| |"
+        nohAtual = self.head
+        while nohAtual.next is not None:
+            strLista += "|" + str(nohAtual.valor)
+            nohAtual = nohAtual.next
+        strLista += "|" + str(nohAtual.valor) + "|"
+        return strLista
+
+lista1 = Lista()
+
+lista1.insertHead(5)
+
+lista1.remover(0)
+
+print(lista1)
