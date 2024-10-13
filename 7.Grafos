@@ -1,0 +1,125 @@
+
+class Vertex:
+    def __init__(self, valor):
+        self.data= valor
+
+class Grafo:
+    def __init__(self, directed = False):
+        self.verticesList = []
+        self.adjList = []
+        self.directed = directed
+    
+    def addVertex(self, valor):
+        tempVertex = Vertex(valor)
+        self.verticesList.append(tempVertex)
+
+        vertexAdj = []
+        self.adjList.append(vertexAdj)
+
+    def addEdge(self, origem, destino):
+        idxOrig = -1
+        idxDest = -1
+        for idx, vertex in enumerate(self.verticesList):
+            if origem == vertex.data:
+                idxOrig = idx
+            if destino == vertex.data:
+                idxDest = idx
+        if idxOrig == -1 or idxDest == -1:
+            print("Algum dos valores nÃ£o esta no Grafo!!!")
+            return
+        self.adjList[idxOrig].append(idxDest)
+        if not self.directed:
+            self.adjList[idxDest].append(idxOrig)
+
+    def encontraVertice(self, valor):
+        idxFirst = -1
+        for idx, vertex in enumerate(self.verticesList):
+            if vertex.data == valor:
+                idxFirst = idx
+        return idxFirst
+
+    def breadthFirstSearch(self, firstVertex = None):
+        if firstVertex is None:
+            idxFirst = 0
+        else:
+            idxFirst = self.encontraVertice(firstVertex)
+
+            if idxFirst == -1:
+                return
+            
+        strBFS, cor = self.exploraBFS(idxFirst)
+
+        strBFS = "( " + strBFS + ")"
+
+        branco = 0
+
+        for idxVertex in range(len(self.verticesList)):
+            if cor[idxVertex] == branco:
+                strBFS2, cor = self.exploraBFS(idxVertex, cor)
+
+                strBFS += "( " + strBFS2 + ")"
+        return strBFS
+
+
+    def exploraBFS(self, idxFirst, cor = None):
+        strBFS = ""
+
+        branco = 0
+        cinza = 1
+        preto = 2
+
+        if cor is None:
+            cor = [branco] * len(self.verticesList)
+        
+        fila = []
+        fila.append( idxFirst )
+        cor[idxFirst] = cinza
+        strBFS += str(self.verticesList[idxFirst].data)
+
+        while len(fila)>0:
+            idxVertex = fila[0]
+
+            for idxAdj in self.adjList[idxVertex]:
+                if cor[idxAdj] == branco:
+                    fila.append(idxAdj)
+                    cor[idxAdj] = cinza
+                    strBFS += ", " + str(self.verticesList[idxAdj].data) 
+            fila.pop(0)
+            cor[idxVertex] = preto
+        return strBFS, cor
+
+
+    def __str__(self):
+        info = 100*"-" + "\n Adj Lista:\n\n" + " ["
+        for idx, vertex in enumerate(self.verticesList):
+            info +=  " " + str(vertex.data) + "["
+            for i, idxAdj in enumerate(self.adjList[idx]):
+                valor = self.verticesList[idxAdj].data
+                info += " " + str(valor)
+            info += " ]"
+        info += " ]"
+        return info
+    
+grafo1 = Grafo(directed=False)
+grafo1.addVertex(1)
+grafo1.addVertex(2)
+grafo1.addVertex(3)
+grafo1.addVertex(4)
+grafo1.addVertex(5)
+grafo1.addVertex(6)
+grafo1.addVertex(7)
+grafo1.addVertex(8)
+grafo1.addVertex(9)
+
+grafo1.addEdge(6,4)
+grafo1.addEdge(4,5)
+grafo1.addEdge(5,1)
+grafo1.addEdge(4,3)
+grafo1.addEdge(3,2)
+grafo1.addEdge(5,2)
+grafo1.addEdge(2,1)
+grafo1.addEdge(7,8)
+
+print(grafo1)
+strBFS = grafo1.breadthFirstSearch(4)
+print(strBFS)
